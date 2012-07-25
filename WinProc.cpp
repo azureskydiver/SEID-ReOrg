@@ -81,18 +81,16 @@ LRESULT CALLBACK WindowProcedure (HWND hwnd, UINT message, WPARAM wParam, LPARAM
 
     case WM_LBUTTONDOWN:
     {
-        StartxPos = LOWORD(lParam);
-        StartyPos = HIWORD(lParam);
-
-
+        StartxPos = GET_X_LPARAM(lParam);
+        StartyPos = GET_Y_LPARAM(lParam);
 
         return 0;
     }
 
     case WM_LBUTTONUP:
     {
-        EndxPos = LOWORD(lParam);
-        EndyPos = HIWORD(lParam);
+        EndxPos = GET_X_LPARAM(lParam);
+        EndyPos = GET_Y_LPARAM(lParam);
 
         mmov = true;
         InvalidateRect(hwnd,&rect,true);
@@ -138,7 +136,7 @@ LRESULT CALLBACK WindowProcedure (HWND hwnd, UINT message, WPARAM wParam, LPARAM
     {
         if((HWND)wParam == hwndViewer)
         {
-            hwndViewer = (HWND)lParam;
+            hwndViewer = GET_WM_CHANGECBCHAIN_HWNDNEXT(wParam, lParam);
         }
         else if(hwndViewer)
         {
@@ -151,7 +149,7 @@ LRESULT CALLBACK WindowProcedure (HWND hwnd, UINT message, WPARAM wParam, LPARAM
 
 
     case WM_COMMAND:
-        switch LOWORD(wParam)
+        switch (GET_WM_COMMAND_ID(wParam, lParam))
         {
 
         case IDM_OPEN_BM:
@@ -576,15 +574,10 @@ LRESULT CALLBACK WindowProcedure (HWND hwnd, UINT message, WPARAM wParam, LPARAM
 
     case  WM_SIZE:
     {
-
-
-        cxsize = LOWORD(lParam);
-        cysize = HIWORD(lParam);
+        cxsize = GET_X_LPARAM(lParam);
+        cysize = GET_Y_LPARAM(lParam);
         rect.right = cxsize;
         rect.bottom = cysize;
-
-
-
 
         fSize = TRUE;
 
@@ -625,7 +618,7 @@ LRESULT CALLBACK WindowProcedure (HWND hwnd, UINT message, WPARAM wParam, LPARAM
         int xNewPos;    // new position
         int yDelta = 0;
 
-        switch (LOWORD(wParam))
+        switch (GET_WM_HSCROLL_CODE(wParam, lParam))
         {
             // User clicked the scroll bar shaft left of the scroll box.
         case SB_PAGEUP:
@@ -649,7 +642,7 @@ LRESULT CALLBACK WindowProcedure (HWND hwnd, UINT message, WPARAM wParam, LPARAM
 
             // User dragged the scroll box.
         case SB_THUMBPOSITION:
-            xNewPos = HIWORD(wParam);
+            xNewPos = GET_WM_HSCROLL_POS(wParam, lParam);
             break;
 
         default:
@@ -699,7 +692,7 @@ LRESULT CALLBACK WindowProcedure (HWND hwnd, UINT message, WPARAM wParam, LPARAM
         int yDelta;     // yDelta = new_pos - current_pos
         int yNewPos;    // new position
 
-        switch (LOWORD(wParam))
+        switch (GET_WM_VSCROLL_CODE(wParam, lParam))
         {
             // User clicked the scroll bar shaft above the scroll box.
         case SB_PAGEUP:
@@ -723,7 +716,7 @@ LRESULT CALLBACK WindowProcedure (HWND hwnd, UINT message, WPARAM wParam, LPARAM
 
             // User dragged the scroll box.
         case SB_THUMBPOSITION:
-            yNewPos = HIWORD(wParam);
+            yNewPos = GET_WM_VSCROLL_POS(wParam, lParam);
             break;
 
         default:
