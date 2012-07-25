@@ -35,7 +35,9 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="Functions.cpp" />
 		<Unit filename="Functions.h" />
+		<Unit filename="WinProc.cpp" />
 		<Unit filename="WinProc.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="resource.h" />

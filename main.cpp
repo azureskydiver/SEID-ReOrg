@@ -1,28 +1,10 @@
-#include "resource.h"
+#include <Windows.h>
 #include "WinProc.h"
-
-
+#include "resource.h"
 
 /*   variables  */
 char szClassName[ ] = "Snoopy's Image Editing Demo";
 
-
-
-/*  Declare  procedures  */
-LRESULT CALLBACK WindowProcedure (HWND, UINT, WPARAM, LPARAM);
-HDC GetPrinterDC (HWND Hwnd);
-BOOL OpenFileDialog(HWND hwnd, LPTSTR pFileName ,LPTSTR pTitleName);
-BOOL SaveFileDialog(HWND hwnd, LPTSTR pFileName ,LPTSTR pTitleName);
-void InitialiseDialog(HWND hwnd);
-PBITMAPINFO CreateBitmapInfoStruct(HWND hwnd, HBITMAP hBmp);
-void SaveBMPFile(HWND hwnd, LPTSTR pszFile, PBITMAPINFO pbi, HBITMAP hBMP, HDC hDC);
-bool BitmapToClipboard(HBITMAP hBM, HWND hWnd);
-HBITMAP CopyScreenToBitmap(HWND Hwnd,int x1, int y1, int x2, int y2);
-void PaintLoadBitmap(HWND hwnd,SCROLLINFO si, BITMAP bitmap, int pcxsize, int pcysize, int xMaxScroll,int xCurrentScroll, int xMinScroll,int yMaxScroll, int yCurrentScroll ,int yMinScroll);
-void DrawBoundingBox(HDC hdc, int StartxPos, int EndxPos, int StartyPos, int EndyPos);
-void Cut(HDC hdc, HDC hdcMem, HBITMAP hBitmap, double Width, double Height, double oWidth, double oHeight, double StartxPos, double EndxPos, double StartyPos, double EndyPos, int xCurrentScroll, int yCurrentScroll);
-void Paste(HWND hwnd, HBITMAP hBitmap, double Width, double Height , double oWidth, double oHeight ,HDC hdc, HDC hdcMem, HDC MemoryDC, double StartxPos, double EndxPos, double xCurrentScroll, double StartyPos, double EndyPos, int yCurrentScroll );
-void ZeroScrollbars(HWND hwnd, SCROLLINFO si, BITMAP bitmap, int cxsize, int cysize,int xCurrentScroll, int yCurrentScroll, int xMaxScroll, int yMaxScroll, int xMinScroll, int yMinScroll);
 
 /*Start of Program Entry point*/
 

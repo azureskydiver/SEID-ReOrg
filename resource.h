@@ -1,6 +1,5 @@
-#define _WIN32_WINNT 0x0500
-
-#include <windows.h>
+#ifndef RESOURCE_H_INCLUDED
+#define RESOURCE_H_INCLUDED
 
 #define ICO1           100
 
@@ -15,3 +14,4 @@
 #define IDM_ZOOMIN     1008
 #define IDM_ZOOMOUT    1009
 
+#endif // RESOURCE_H_INCLUDED
