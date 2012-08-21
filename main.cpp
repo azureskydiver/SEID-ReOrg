@@ -52,7 +52,7 @@ int WINAPI WinMain (HINSTANCE hThisInstance,
                HWND_DESKTOP,        /* The window is a child-window to desktop */
                NULL,                /* menu */
                hThisInstance,       /* Program Instance handler */
-               &mainwindow          /* No Window Creation data */
+               &mainwindow          /* MainWindow instance */
            );
 
     /* Make the window visible on the screen */
