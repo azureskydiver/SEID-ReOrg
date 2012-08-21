@@ -733,9 +733,23 @@ void MainWindow_OnDestroy(HWND hwnd)
     PostQuitMessage (0);       /* send a WM_QUIT to the message queue */
 }
 
+/*
+ * class MainWindow
+ *
+ * Implementation goes below.
+ */
+
+MainWindow::MainWindow()
+{
+}
+
+MainWindow::~MainWindow()
+{
+}
+
 /*  This function is called by the Windows function DispatchMessage()  */
 
-LRESULT CALLBACK WindowProcedure (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK MainWindow::WindowProcedure (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     switch (message)
     {
@@ -756,19 +770,4 @@ LRESULT CALLBACK WindowProcedure (HWND hwnd, UINT message, WPARAM wParam, LPARAM
 
     /* for messages that we don't deal with */
     return DefWindowProc (hwnd, message, wParam, lParam);
-}
-
-
-/*
- * class MainWindow
- *
- * Implementation goes below.
- */
-
-MainWindow::MainWindow()
-{
-}
-
-MainWindow::~MainWindow()
-{
 }
