@@ -16,6 +16,7 @@ int WINAPI WinMain (HINSTANCE hThisInstance,
     HWND hwnd;               /* This is the handle for our window */
     MSG messages;            /* Here messages to the application are saved */
     WNDCLASSEX wincl;        /* Data structure for the windowclass */
+    MainWindow mainwindow;
 
     /* The Window structure */
     wincl.hInstance = hThisInstance;
@@ -42,7 +43,7 @@ int WINAPI WinMain (HINSTANCE hThisInstance,
     hwnd = CreateWindowEx (
                0,                   /* Extended possibilites for variation */
                szClassName,         /* Classname */
-               szClassName,       /* Title Text */
+               szClassName,         /* Title Text */
                WS_OVERLAPPEDWINDOW, /* default window */
                CW_USEDEFAULT,       /* Windows decides the position */
                CW_USEDEFAULT,       /* where the window ends up on the screen */
@@ -51,7 +52,7 @@ int WINAPI WinMain (HINSTANCE hThisInstance,
                HWND_DESKTOP,        /* The window is a child-window to desktop */
                NULL,                /* menu */
                hThisInstance,       /* Program Instance handler */
-               NULL                 /* No Window Creation data */
+               &mainwindow          /* No Window Creation data */
            );
 
     /* Make the window visible on the screen */
