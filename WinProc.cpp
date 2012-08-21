@@ -749,8 +749,17 @@ MainWindow::~MainWindow()
 
 /*  This function is called by the Windows function DispatchMessage()  */
 
-LRESULT CALLBACK MainWindow::WindowProcedure (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK MainWindow::WindowProcedure(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
+    MainWindow * pThis = reinterpret_cast<MainWindow *>(GetWindowLongPtr(hwnd, GWLP_USERDATA));
+
+    if (!pThis && message == WM_CREATE)
+    {
+        LPCREATESTRUCT pcreatestruct = reinterpret_cast<LPCREATESTRUCT>(lParam);
+        pThis = reinterpret_cast<MainWindow *>(pcreatestruct->lpCreateParams);
+        SetWindowLongPtr(hwnd, GWLP_USERDATA, reinterpret_cast<LPARAM>(pThis));
+    }
+
     switch (message)
     {
     HANDLE_MSG(hwnd, WM_CREATE,             MainWindow_OnCreate);
