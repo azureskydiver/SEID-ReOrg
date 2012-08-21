@@ -50,7 +50,21 @@ static BOOL paste;
 
 using namespace std;
 
-BOOL MainWindow_OnCreate(HWND hwnd, LPCREATESTRUCT lpCreateStruct)
+/*
+ * class MainWindow
+ *
+ * Implementation goes below.
+ */
+
+MainWindow::MainWindow()
+{
+}
+
+MainWindow::~MainWindow()
+{
+}
+
+BOOL MainWindow::OnCreate(HWND hwnd, LPCREATESTRUCT lpCreateStruct)
 {
     InitialiseDialog(hwnd);
     hwndViewer = SetClipboardViewer(hwnd);
@@ -74,13 +88,13 @@ BOOL MainWindow_OnCreate(HWND hwnd, LPCREATESTRUCT lpCreateStruct)
     return TRUE;
 }
 
-void MainWindow_OnLButtonDown(HWND hwnd, BOOL fDoubleClick, int x, int y, UINT keyFlags)
+void MainWindow::OnLButtonDown(HWND hwnd, BOOL fDoubleClick, int x, int y, UINT keyFlags)
 {
     StartxPos = x;
     StartyPos = y;
 }
 
-void MainWindow_OnLButtonUp(HWND hwnd, int x, int y, UINT keyFlags)
+void MainWindow::OnLButtonUp(HWND hwnd, int x, int y, UINT keyFlags)
 {
     EndxPos = x;
     EndyPos = y;
@@ -89,7 +103,7 @@ void MainWindow_OnLButtonUp(HWND hwnd, int x, int y, UINT keyFlags)
     InvalidateRect(hwnd,&rect,true);
 }
 
-BOOL MainWindow_OnQueryNewPalette(HWND hwnd)
+BOOL MainWindow::OnQueryNewPalette(HWND hwnd)
 {
     if (!hpal)
         return FALSE;
@@ -101,7 +115,7 @@ BOOL MainWindow_OnQueryNewPalette(HWND hwnd)
     return TRUE;
 }
 
-void MainWindow_OnPaletteChanged(HWND hwnd, HWND hwndPaletteChange)
+void MainWindow::OnPaletteChanged(HWND hwnd, HWND hwndPaletteChange)
 {
     if (!hpal || hwndPaletteChange == hwnd)
         return;
@@ -112,7 +126,7 @@ void MainWindow_OnPaletteChanged(HWND hwnd, HWND hwndPaletteChange)
     ReleaseDC(hwnd,hdc);
 }
 
-void MainWindow_OnDrawClipboard(HWND hwnd)
+void MainWindow::OnDrawClipboard(HWND hwnd)
 {
     if (hwndViewer)
     {
@@ -123,7 +137,7 @@ void MainWindow_OnDrawClipboard(HWND hwnd)
     InvalidateRect(hwnd, NULL, true);
 }
 
-void MainWindow_OnChangeCBChain(HWND hwnd, HWND hwndRemove, HWND hwndNext)
+void MainWindow::OnChangeCBChain(HWND hwnd, HWND hwndRemove, HWND hwndNext)
 {
     if(hwndRemove == hwndViewer)
     {
@@ -135,7 +149,7 @@ void MainWindow_OnChangeCBChain(HWND hwnd, HWND hwndRemove, HWND hwndNext)
     }
 }
 
-void MainWindow_OnCommand_Open_BM(HWND hwnd)
+void MainWindow::OnCommand_Open_BM(HWND hwnd)
 {
     hdc = NULL;
 
@@ -172,13 +186,11 @@ void MainWindow_OnCommand_Open_BM(HWND hwnd)
                 EnableMenuItem(menu, IDM_PASTE, MF_ENABLED);
             }
             InvalidateRect(hwnd,&rect,true);
-
-
         }
     }
 }
 
-void MainWindow_OnCommand_Print_BM(HWND hwnd)
+void MainWindow::OnCommand_Print_BM(HWND hwnd)
 {
     DOCINFO di= { sizeof (DOCINFO), TEXT ("Printing Picture...")};
     HDC prn;
@@ -204,7 +216,7 @@ void MainWindow_OnCommand_Print_BM(HWND hwnd)
     DeleteDC(hdcMem);
 }
 
-void MainWindow_OnCommand_Save_BM(HWND hwnd)
+void MainWindow::OnCommand_Save_BM(HWND hwnd)
 {
     BOOL result = SaveFileDialog(hwnd,szFileName,(TCHAR*)"Save a Bitmap.");
     if(result != false)
@@ -215,12 +227,12 @@ void MainWindow_OnCommand_Save_BM(HWND hwnd)
     }
 }
 
-void MainWindow_OnCommand_Exit(HWND hwnd)
+void MainWindow::OnCommand_Exit(HWND hwnd)
 {
     PostQuitMessage(0);
 }
 
-void MainWindow_OnCommand_Copy(HWND hwnd)
+void MainWindow::OnCommand_Copy(HWND hwnd)
 {
     int cutwidth = (int)abs(StartxPos - EndxPos);
     int cutheight = (int)abs(StartyPos - EndyPos);
@@ -251,7 +263,7 @@ void MainWindow_OnCommand_Copy(HWND hwnd)
     DeleteBitmap(hbmp);
 }
 
-void MainWindow_OnCommand_Cut(HWND hwnd)
+void MainWindow::OnCommand_Cut(HWND hwnd)
 {
     int cutwidth = (int)abs(StartxPos - EndxPos);
     int cutheight = (int)abs(StartyPos - EndyPos);
@@ -289,14 +301,14 @@ void MainWindow_OnCommand_Cut(HWND hwnd)
     InvalidateRect(hwnd,&rect,true);
 }
 
-void MainWindow_OnCommand_Paste(HWND hwnd)
+void MainWindow::OnCommand_Paste(HWND hwnd)
 {
     paste = true;
 
     InvalidateRect(hwnd,NULL,true);
 }
 
-void MainWindow_OnCommand_ZoomOut(HWND hwnd)
+void MainWindow::OnCommand_ZoomOut(HWND hwnd)
 {
     zoom = zoom - 25;
     if (zoom < -75)
@@ -344,7 +356,7 @@ void MainWindow_OnCommand_ZoomOut(HWND hwnd)
     InvalidateRect(hwnd,&WinRect,true);
 }
 
-void MainWindow_OnCommand_ZoomIn(HWND hwnd)
+void MainWindow::OnCommand_ZoomIn(HWND hwnd)
 {
     zoom = zoom + 25;
     if (zoom >  75)
@@ -391,49 +403,49 @@ void MainWindow_OnCommand_ZoomIn(HWND hwnd)
     InvalidateRect(hwnd,&WinRect,true);
 }
 
-void MainWindow_OnCommand(HWND hwnd, int id, HWND hwndCtl, UINT codeNotify)
+void MainWindow::OnCommand(HWND hwnd, int id, HWND hwndCtl, UINT codeNotify)
 {
     switch (id)
     {
     case IDM_OPEN_BM:
-        MainWindow_OnCommand_Open_BM(hwnd);
+        OnCommand_Open_BM(hwnd);
         break;
 
     case IDM_PRINT_BM:
-        MainWindow_OnCommand_Print_BM(hwnd);
+        OnCommand_Print_BM(hwnd);
         break;
 
     case IDM_SAVE_BM:
-        MainWindow_OnCommand_Save_BM(hwnd);
+        OnCommand_Save_BM(hwnd);
         break;
 
     case IDM_EXIT:
-        MainWindow_OnCommand_Exit(hwnd);
+        OnCommand_Exit(hwnd);
         break;
 
     case IDM_COPY:
-        MainWindow_OnCommand_Copy(hwnd);
+        OnCommand_Copy(hwnd);
         break;
 
     case IDM_CUT:
-        MainWindow_OnCommand_Cut(hwnd);
+        OnCommand_Cut(hwnd);
         break;
 
     case IDM_PASTE:
-        MainWindow_OnCommand_Paste(hwnd);
+        OnCommand_Paste(hwnd);
         break;
 
     case IDM_ZOOMOUT:
-        MainWindow_OnCommand_ZoomOut(hwnd);
+        OnCommand_ZoomOut(hwnd);
         break;
 
     case IDM_ZOOMIN:
-        MainWindow_OnCommand_ZoomIn(hwnd);
+        OnCommand_ZoomIn(hwnd);
         break;
     }
 }
 
-void MainWindow_OnPaint(HWND hwnd)
+void MainWindow::OnPaint(HWND hwnd)
 {
     PAINTSTRUCT ps;
 
@@ -545,7 +557,7 @@ void MainWindow_OnPaint(HWND hwnd)
     DeleteDC(MemoryDC);
 }
 
-void MainWindow_OnSize(HWND hwnd, UINT state, int cx, int cy)
+void MainWindow::OnSize(HWND hwnd, UINT state, int cx, int cy)
 {
     cxsize = cx;
     cysize = cy;
@@ -585,7 +597,7 @@ void MainWindow_OnSize(HWND hwnd, UINT state, int cx, int cy)
     InvalidateRect(hwnd, &WinRect, true);
 }
 
-void MainWindow_OnHScroll(HWND hwnd, HWND hwndCtl, UINT code, int pos)
+void MainWindow::OnHScroll(HWND hwnd, HWND hwndCtl, UINT code, int pos)
 {
     int xDelta;     // xDelta = new_pos - current_pos
     int xNewPos;    // new position
@@ -656,7 +668,7 @@ void MainWindow_OnHScroll(HWND hwnd, HWND hwndCtl, UINT code, int pos)
     SetScrollInfo(hwnd, SB_HORZ, &si, TRUE);
 }
 
-void MainWindow_OnVScroll(HWND hwnd, HWND hwndCtl, UINT code, int pos)
+void MainWindow::OnVScroll(HWND hwnd, HWND hwndCtl, UINT code, int pos)
 {
     int xDelta = 0;
     int yDelta;     // yDelta = new_pos - current_pos
@@ -727,43 +739,29 @@ void MainWindow_OnVScroll(HWND hwnd, HWND hwndCtl, UINT code, int pos)
     SetScrollInfo(hwnd, SB_VERT, &si, TRUE);
 }
 
-void MainWindow_OnDestroy(HWND hwnd)
+void MainWindow::OnDestroy(HWND hwnd)
 {
     ChangeClipboardChain(hwnd, hwndViewer);
     PostQuitMessage (0);       /* send a WM_QUIT to the message queue */
-}
-
-/*
- * class MainWindow
- *
- * Implementation goes below.
- */
-
-MainWindow::MainWindow()
-{
-}
-
-MainWindow::~MainWindow()
-{
 }
 
 LRESULT CALLBACK MainWindow::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     switch (message)
     {
-    HANDLE_MSG(hwnd, WM_CREATE,             MainWindow_OnCreate);
-    HANDLE_MSG(hwnd, WM_LBUTTONDOWN,        MainWindow_OnLButtonDown);
-    HANDLE_MSG(hwnd, WM_LBUTTONUP,          MainWindow_OnLButtonUp);
-    HANDLE_MSG(hwnd, WM_QUERYNEWPALETTE,    MainWindow_OnQueryNewPalette);
-    HANDLE_MSG(hwnd, WM_PALETTECHANGED,     MainWindow_OnPaletteChanged);
-    HANDLE_MSG(hwnd, WM_DRAWCLIPBOARD,      MainWindow_OnDrawClipboard);
-    HANDLE_MSG(hwnd, WM_CHANGECBCHAIN,      MainWindow_OnChangeCBChain);
-    HANDLE_MSG(hwnd, WM_COMMAND,            MainWindow_OnCommand);
-    HANDLE_MSG(hwnd, WM_PAINT,              MainWindow_OnPaint);
-    HANDLE_MSG(hwnd, WM_SIZE,               MainWindow_OnSize);
-    HANDLE_MSG(hwnd, WM_HSCROLL,            MainWindow_OnHScroll);
-    HANDLE_MSG(hwnd, WM_VSCROLL,            MainWindow_OnVScroll);
-    HANDLE_MSG(hwnd, WM_DESTROY,            MainWindow_OnDestroy);
+    HANDLE_MSG(hwnd, WM_CREATE,             OnCreate);
+    HANDLE_MSG(hwnd, WM_LBUTTONDOWN,        OnLButtonDown);
+    HANDLE_MSG(hwnd, WM_LBUTTONUP,          OnLButtonUp);
+    HANDLE_MSG(hwnd, WM_QUERYNEWPALETTE,    OnQueryNewPalette);
+    HANDLE_MSG(hwnd, WM_PALETTECHANGED,     OnPaletteChanged);
+    HANDLE_MSG(hwnd, WM_DRAWCLIPBOARD,      OnDrawClipboard);
+    HANDLE_MSG(hwnd, WM_CHANGECBCHAIN,      OnChangeCBChain);
+    HANDLE_MSG(hwnd, WM_COMMAND,            OnCommand);
+    HANDLE_MSG(hwnd, WM_PAINT,              OnPaint);
+    HANDLE_MSG(hwnd, WM_SIZE,               OnSize);
+    HANDLE_MSG(hwnd, WM_HSCROLL,            OnHScroll);
+    HANDLE_MSG(hwnd, WM_VSCROLL,            OnVScroll);
+    HANDLE_MSG(hwnd, WM_DESTROY,            OnDestroy);
     }
 
     /* for messages that we don't deal with */
