@@ -9,6 +9,9 @@ public:
     ~MainWindow();
 
     static LRESULT CALLBACK WindowProcedure(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam);
+
+protected:
+    virtual LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam);
 };
 
 #endif // WINPROC_H_INCLUDED

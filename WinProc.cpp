@@ -747,24 +747,8 @@ MainWindow::~MainWindow()
 {
 }
 
-/*  This function is called by the Windows function DispatchMessage()  */
-
-LRESULT CALLBACK MainWindow::WindowProcedure(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK MainWindow::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-    MainWindow * pThis = reinterpret_cast<MainWindow *>(GetWindowLongPtr(hwnd, GWLP_USERDATA));
-
-    if (!pThis && message == WM_CREATE)
-    {
-        LPCREATESTRUCT pcreatestruct = reinterpret_cast<LPCREATESTRUCT>(lParam);
-        pThis = reinterpret_cast<MainWindow *>(pcreatestruct->lpCreateParams);
-        SetWindowLongPtr(hwnd, GWLP_USERDATA, reinterpret_cast<LPARAM>(pThis));
-    }
-
-    if (pThis && message == WM_DESTROY)
-    {
-        SetWindowLongPtr(hwnd, GWLP_USERDATA, NULL);
-    }
-
     switch (message)
     {
     HANDLE_MSG(hwnd, WM_CREATE,             MainWindow_OnCreate);
@@ -783,5 +767,33 @@ LRESULT CALLBACK MainWindow::WindowProcedure(HWND hwnd, UINT message, WPARAM wPa
     }
 
     /* for messages that we don't deal with */
-    return DefWindowProc (hwnd, message, wParam, lParam);
+    return DefWindowProc(hwnd, message, wParam, lParam);
+}
+
+
+/*  This function is called by the Windows function DispatchMessage()  */
+
+LRESULT CALLBACK MainWindow::WindowProcedure(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
+{
+    MainWindow * pThis = reinterpret_cast<MainWindow *>(GetWindowLongPtr(hwnd, GWLP_USERDATA));
+
+    if (!pThis && message == WM_CREATE)
+    {
+        LPCREATESTRUCT pcreatestruct = reinterpret_cast<LPCREATESTRUCT>(lParam);
+        pThis = reinterpret_cast<MainWindow *>(pcreatestruct->lpCreateParams);
+        SetWindowLongPtr(hwnd, GWLP_USERDATA, reinterpret_cast<LPARAM>(pThis));
+    }
+
+    if (pThis && message == WM_DESTROY)
+    {
+        SetWindowLongPtr(hwnd, GWLP_USERDATA, NULL);
+    }
+
+    if (pThis)
+    {
+        return pThis->WndProc(hwnd, message, wParam, lParam);
+    }
+
+    /* for messages that we don't deal with */
+    return DefWindowProc(hwnd, message, wParam, lParam);
 }
