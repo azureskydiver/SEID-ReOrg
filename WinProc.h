@@ -2,6 +2,13 @@
 #define WINPROC_H_INCLUDED
 #include <Windows.h>
 
+class MainWindow
+{
+public:
+    MainWindow();
+    ~MainWindow();
+};
+
 LRESULT CALLBACK WindowProcedure (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam);
 
 #endif // WINPROC_H_INCLUDED

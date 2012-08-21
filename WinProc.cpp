@@ -757,3 +757,18 @@ LRESULT CALLBACK WindowProcedure (HWND hwnd, UINT message, WPARAM wParam, LPARAM
     /* for messages that we don't deal with */
     return DefWindowProc (hwnd, message, wParam, lParam);
 }
+
+
+/*
+ * class MainWindow
+ *
+ * Implementation goes below.
+ */
+
+MainWindow::MainWindow()
+{
+}
+
+MainWindow::~MainWindow()
+{
+}
