@@ -8,9 +8,13 @@ public:
     MainWindow();
     ~MainWindow();
 
-    static LRESULT CALLBACK WindowProcedure(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam);
+    HWND Create(HINSTANCE hinstance);
+
+    static BOOL RegisterClass(HINSTANCE hinstance);
 
 protected:
+    static LRESULT CALLBACK WindowProcedure(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam);
+
     virtual LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam);
 
     virtual BOOL OnCreate(HWND hwnd, LPCREATESTRUCT lpCreateStruct);
@@ -36,6 +40,23 @@ protected:
     virtual void OnVScroll(HWND hwnd, HWND hwndCtl, UINT code, int pos);
     virtual void OnDestroy(HWND hwnd);
 
+    HDC GetPrinterDC (HWND Hwnd);
+    BOOL OpenFileDialog(HWND hwnd, LPTSTR pFileName ,LPTSTR pTitleName);
+    BOOL SaveFileDialog(HWND hwnd, LPTSTR pFileName ,LPTSTR pTitleName);
+    void InitialiseDialog(HWND hwnd);
+    void SaveBMPFile(HWND hwnd, LPTSTR pszFile, PBITMAPINFO pbi, HBITMAP hBMP, HDC hDC);
+    PBITMAPINFO CreateBitmapInfoStruct(HWND hwnd, HBITMAP hBmp);
+    bool BitmapToClipboard(HBITMAP hBM, HWND hWnd);
+    HBITMAP CopyScreenToBitmap(HWND Hwnd,int x1, int y1, int nWidth, int nHeight);
+    void PaintLoadBitmap(HWND hwnd,SCROLLINFO si, BITMAP bitmap, int pcxsize, int pcysize, int xMaxScroll,int xCurrentScroll, int xMinScroll,int yMaxScroll, int yCurrentScroll ,int yMinScroll);
+    void DrawBoundingBox(HDC hdc, int StartxPos, int EndxPos, int StartyPos, int EndyPos);
+    void Cut(HDC hdc, HDC hdcMem, HBITMAP hBitmap, double Width, double Height, double oWidth, double oHeight, double StartxPos, double EndxPos, double StartyPos, double EndyPos, int xCurrentScroll, int yCurrentScroll);
+    void Paste(HWND hwnd, HBITMAP hBitmap,double Width,double Height ,double oWidth, double oHeight ,HDC hdc, HDC hdcMem, HDC MemoryDC, double StartxPos, double EndxPos, int xCurrentScroll, double StartyPos, double EndyPos, int yCurrentScroll );
+    void ZeroScrollbars(HWND hwnd, SCROLLINFO si, BITMAP bitmap, int cxsize, int cysize,int xCurrentScroll, int yCurrentScroll, int xMaxScroll, int yMaxScroll, int xMinScroll, int yMinScroll);
+
+    static char szClassName[];
+
+    HWND hwnd;
     HPALETTE hpal;
     HMENU menu;
     HBITMAP hBitmap;
@@ -77,6 +98,9 @@ protected:
     BOOL mmov;
     BOOL cut;
     BOOL paste;
+
+    OPENFILENAME ofn;
+    char szFileName[500];
 };
 
 #endif // WINPROC_H_INCLUDED

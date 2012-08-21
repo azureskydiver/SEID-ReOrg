@@ -73,7 +73,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Functions.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="WinProc.h" />
   </ItemGroup>
@@ -81,7 +80,6 @@
     <ResourceCompile Include="resource.rc" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Functions.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="WinProc.cpp" />
   </ItemGroup>
