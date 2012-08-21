@@ -4,50 +4,6 @@
 #include <cmath>
 #include <algorithm>
 
-HPALETTE hpal;
-HMENU menu;
-HBITMAP hBitmap;
-double bxWidth, bxHeight;
-double bxWidth2, bxHeight2;
-double zoom =0;
-bool fZoom = false;
-int cxsize = 0, cxpage = 0;
-int cysize = 0, cypage = 0;
-HDC hdc,hdcMem;
-RECT rect,WinRect;
-SCROLLINFO si;
-BITMAP bitmap;
-double StartxPos;
-double StartyPos;
-double EndxPos;
-double EndyPos;
-
-// "Virtual" globals
-
-// These variables are required by BitBlt.
-
-static BOOL fBlt;
-static BOOL fLoad;           // TRUE if BitBlt occurred
-static BOOL fScroll;         // TRUE if scrolling occurred
-static BOOL fSize;           // TRUE if fBlt & WM_SIZE
-
-// These variables are required for horizontal scrolling.
-static int xMinScroll;       // minimum horizontal scroll value
-static int xCurrentScroll;   // current horizontal scroll value
-static int xMaxScroll;       // maximum horizontal scroll value
-
-// These variables are required for vertical scrolling.
-static int yMinScroll;       // minimum vertical scroll value
-static int yCurrentScroll;   // current vertical scroll value
-static int yMaxScroll;       // maximum vertical scroll value
-static HWND hwndViewer;
-
-// These variables are required by BitBlt.
-
-static BOOL mmov;
-static BOOL cut;
-static BOOL paste;
-
 using namespace std;
 
 /*
@@ -57,6 +13,12 @@ using namespace std;
  */
 
 MainWindow::MainWindow()
+    : zoom(0)
+    , fZoom(false)
+    , cxsize(0)
+    , cxpage(0)
+    , cysize(0)
+    , cypage(0)
 {
 }
 

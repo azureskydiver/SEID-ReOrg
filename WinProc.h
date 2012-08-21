@@ -35,6 +35,48 @@ protected:
     virtual void OnHScroll(HWND hwnd, HWND hwndCtl, UINT code, int pos);
     virtual void OnVScroll(HWND hwnd, HWND hwndCtl, UINT code, int pos);
     virtual void OnDestroy(HWND hwnd);
+
+    HPALETTE hpal;
+    HMENU menu;
+    HBITMAP hBitmap;
+    double bxWidth, bxHeight;
+    double bxWidth2, bxHeight2;
+    double zoom;
+    bool fZoom;
+    int cxsize, cxpage;
+    int cysize, cypage;
+    HDC hdc,hdcMem;
+    RECT rect,WinRect;
+    SCROLLINFO si;
+    BITMAP bitmap;
+    double StartxPos;
+    double StartyPos;
+    double EndxPos;
+    double EndyPos;
+
+    // These variables are required by BitBlt.
+
+    BOOL fBlt;
+    BOOL fLoad;           // TRUE if BitBlt occurred
+    BOOL fScroll;         // TRUE if scrolling occurred
+    BOOL fSize;           // TRUE if fBlt & WM_SIZE
+
+    // These variables are required for horizontal scrolling.
+    int xMinScroll;       // minimum horizontal scroll value
+    int xCurrentScroll;   // current horizontal scroll value
+    int xMaxScroll;       // maximum horizontal scroll value
+
+    // These variables are required for vertical scrolling.
+    int yMinScroll;       // minimum vertical scroll value
+    int yCurrentScroll;   // current vertical scroll value
+    int yMaxScroll;       // maximum vertical scroll value
+    HWND hwndViewer;
+
+    // These variables are required by BitBlt.
+
+    BOOL mmov;
+    BOOL cut;
+    BOOL paste;
 };
 
 #endif // WINPROC_H_INCLUDED
