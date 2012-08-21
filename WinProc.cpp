@@ -760,6 +760,11 @@ LRESULT CALLBACK MainWindow::WindowProcedure(HWND hwnd, UINT message, WPARAM wPa
         SetWindowLongPtr(hwnd, GWLP_USERDATA, reinterpret_cast<LPARAM>(pThis));
     }
 
+    if (pThis && message == WM_DESTROY)
+    {
+        SetWindowLongPtr(hwnd, GWLP_USERDATA, NULL);
+    }
+
     switch (message)
     {
     HANDLE_MSG(hwnd, WM_CREATE,             MainWindow_OnCreate);
